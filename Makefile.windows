@@ -1,0 +1,14 @@
+CC=		/usr/lib/mingw64-toolchain/bin/x86_64-w64-mingw32-gcc
+CFLAGS=		-L. -lraylib -O3 -lm -lopengl32 -lgdi32 -lwinmm
+OUT=		pixab
+
+all: compile strip
+
+compile:
+	${CC} -o ${OUT} main.c ${CFLAGS}
+
+strip:
+	strip ${OUT}.exe
+
+run: compile strip
+	env WINEPREFIX=/home/`whoami`/.wine64 WINEARCH=win64 wine ${OUT}.exe
